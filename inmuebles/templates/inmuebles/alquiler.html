@@ -2,5 +2,20 @@
 
 {% block content %}
 <h1>alquileres varios</h1>
+{% for alquiler in alquileres %}
+<div>
+    <div class="tipo">
+        <p>{{alquiler.tipo}}</p>
+    </div>
+    <div class="ubicacion">
+        <p>{{alquiler.lugar}}</p>
+        <p>{{alquiler.direccion}}</p>
+    </div>
+    {% if alquiler.amueblado %} <p>Amueblado!</p> {% endif %}
+
+</div>
+
+
+{% endfor %}
 
 {% endblock %}

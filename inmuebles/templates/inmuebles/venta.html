@@ -1,6 +1,21 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
-<h1>Ventas mamaaaa</h1>
+<h1>Venta de inmuebles</h1>
+{% for venta in ventas %}
+<div>
+    <div class="tipo">
+        <p>{{venta.tipo}}</p>
+    </div>
+    <div class="ubicacion">
+        <p>{{venta.lugar}}</p>
+        <p>{{venta.direccion}}</p>
+    </div>
+    {% if venta.amueblado %} <p>Amueblado!</p> {% endif %}
+
+</div>
+
+
+{% endfor %}
 
 {% endblock %}
