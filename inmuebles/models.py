@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
-class Tipo_Serv(models.model):
+class Tipo_Serv(models.Model):
     tipo = models.CharField(
         max_length=100, help_text="Venta, Alquiler, Venta y Alquiler"
     )
@@ -39,6 +39,17 @@ class Tipo(models.Model):
         return self.tipo_propiedad
 
 
+class Caracteristicas(models.Model):
+    metros_cubiertos = models.IntegerField(blank=True, null=True)
+    metros_terreno = models.IntegerField(blank=True, null=True)
+    baños = models.IntegerField(blank=True, null=True)
+    garage = models.IntegerField(blank=True, null=True)
+    dormitorio = models.IntegerField(blank=True, null=True)
+    precio = models.IntegerField(blank=True, null=True)
+    moneda = models.IntegerField(blank=True, null=True)
+    imagen = models.ImageField(upload_to="imagenes/", blank=True, null=True)
+
+
 class Inmueble(models.Model):
     tipo_serv = models.ForeignKey(Tipo_Serv, on_delete=models.PROTECT)
     tipo = models.ForeignKey(Tipo, on_delete=models.PROTECT)
@@ -48,56 +59,6 @@ class Inmueble(models.Model):
     disponibilidad = models.ForeignKey(Estado, on_delete=models.PROTECT)
     descripcion = models.TextField()
     fecha_publicacion = models.DateTimeField(default=timezone.now, editable=False)
-
-
-class Metros_cubiertos(models.Model):
-    metros = models.OneToOneField(Inmueble, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-
-    def __str__(self):
-        self.cantidad
-
-
-class Metros_terreno(models.Model):
-    metros = models.OneToOneField(Inmueble, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-
-    def __str__(self):
-        self.cantidad
-
-
-class Baños(models.Models):
-    baños = models.OneToOneField(Inmueble, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-
-    def __str__(self):
-        self.cantidad
-
-
-class Garage(models.Models):
-    garage = models.OneToOneField(Inmueble, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-
-    def __str__(self):
-        self.cantidad
-
-
-class Dormitorio(models.Models):
-    dormitorio = models.OneToOneField(Inmueble, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-
-    def __str__(self):
-        self.cantidad
-
-
-class Precio(models.Models):
-    precio = models.OneToOneField(Inmueble, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-    moneda = models.ForeignKey(Moneda)
-
-    def __str__(self):
-        self.cantidad
-
-
-class Imagen(models.Models):
-    imagen = models.ImageField(upload_to="imagenes/", blank=True, null=True)
+    caracteristicas = models.OneToOneField(
+        Caracteristicas, on_delete=models.PROTECT, null=True, blank=True
+    )

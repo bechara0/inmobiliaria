@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Alquiler, Ventas, Tipo, Estado, Localidad, Moneda
+from .models import (
+    Inmueble,
+    Tipo,
+    Estado,
+    Localidad,
+    Caracteristicas,
+)
 
 
 class LocalidadAdmin(admin.ModelAdmin):
@@ -14,21 +20,15 @@ class TipoAdmin(admin.ModelAdmin):
     list_display = ("tipo_propiedad",)
 
 
-class VentasAdmin(admin.ModelAdmin):
-    list_display = ("direccion", "lugar", "tipo")
-    list_filter = ("lugar", "tipo", "fecha_publicacion")
+class InmuebleAdmin(admin.ModelAdmin):
+    list_display = ("direccion", "lugar", "tipo", "tipo_serv")
+    list_filter = ("lugar", "tipo", "fecha_publicacion", "tipo_serv")
     search_fields = ("lugar__localidad", "direccion", "tipo__nombre")
 
 
-class AlquilerAdmin(admin.ModelAdmin):
-    list_display = ("direccion", "lugar", "tipo", "disponibilidad")
-    list_filter = ("lugar", "tipo", "fecha_publicacion", "disponibilidad")
-    search_fields = ("lugar__localidad", "direccion", "tipo__nombre")
+admin.site.register(Inmueble, InmuebleAdmin)
 
-
-admin.site.register(Ventas, VentasAdmin)
-admin.site.register(Alquiler, AlquilerAdmin)
 admin.site.register(Tipo, TipoAdmin)
 admin.site.register(Estado, EstadoAdmin)
 admin.site.register(Localidad, LocalidadAdmin)
-admin.site.register(Moneda)
+admin.site.register(Caracteristicas)
